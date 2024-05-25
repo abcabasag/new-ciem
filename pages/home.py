@@ -54,9 +54,13 @@ layout=html.Div([
             dbc.Container([
             dbc.Carousel(
                     items=[
-                        {"key": "1", "src": "/static/ciem1.jpg"},
-                        {"key": "2", "src": "/static/ciem3.jpg"},
-                        {"key": "3", "src": "/static/ciem4.jpg"},
+                        {"key": "1", "src": "/static/c1.jpg"},
+                        {"key": "2", "src": "/static/c2.jpg"},
+                        {"key": "3", "src": "/static/c3.jpg"},
+                        {"key": "4", "src": "/static/c4.jpg"},
+                        {"key": "5", "src": "/static/c5.jpg"},
+                        {"key": "6", "src": "/static/c6.jpg"},
+                        {"key": "7", "src": "/static/c7.jpg"},
                     ],
                     controls=False,
                     indicators=False,
@@ -65,7 +69,7 @@ layout=html.Div([
                     style={'aspect-ratio':'16/9','height':'450px','overflow-y':'hidden'},
                 ),
             dbc.Container([
-                html.H2("About CIEM",
+                html.H2("About UP CIEM",
                     style={
                     "text-align": "left",
                     "font-family": "Tahoma",
@@ -79,6 +83,7 @@ layout=html.Div([
                     style={
                     "font-family": "Arial",
                     "font-weight":"normal",
+                    "font-size":"1.25em",
                     "text-align":"justify",
                     "margin":"0"}
                     ),]      
@@ -88,10 +93,10 @@ layout=html.Div([
             ,
             dbc.CardFooter(
                 [
-                    dbc.Button([di(icon='mingcute:facebook-line',inline=True),dbc.Label("Facebook Page")],href="https://www.facebook.com/upciem",external_link=True),
-                    dbc.Button([di(icon='bi:instagram',inline=True),dbc.Label("Instagram")],href="https://www.instagram.com/upciem/",external_link=True),
-                    dbc.Button([di(icon='iconoir:twitter',inline=True),dbc.Label("Twitter")],href="https://twitter.com/upciem",external_link=True),
-                    dbc.Button([di(icon='lucide:linkedin',inline=True),dbc.Label("LinkedIn")],href="https://ph.linkedin.com/company/upciem1976",external_link=True), 
+                    dbc.Button([di(icon='mingcute:facebook-line',inline=True),dbc.Label("Facebook Page",style={'padding-left':'0.5em'})],href="https://www.facebook.com/upciem",external_link=True),
+                    dbc.Button([di(icon='bi:instagram',inline=True),dbc.Label("Instagram",style={'padding-left':'0.5em'})],href="https://www.instagram.com/upciem/",external_link=True),
+                    dbc.Button([di(icon='iconoir:twitter',inline=True),dbc.Label("Twitter",style={'padding-left':'0.5em'})],href="https://twitter.com/upciem",external_link=True),
+                    dbc.Button([di(icon='lucide:linkedin',inline=True),dbc.Label("LinkedIn",style={'padding-left':'0.5em'})],href="https://ph.linkedin.com/company/upciem1976",external_link=True), 
                 ]
                 ,style={'display':'flex','justify-content':'space-evenly'}
             )

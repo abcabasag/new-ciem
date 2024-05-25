@@ -77,10 +77,6 @@ def displaypage (pathname,data):
                 PreventUpdate
     else:
         raise PreventUpdate
-@app.callback(
-    Output
-)
-def update_auth():
-    raise PreventUpdate
+
 if __name__ == '__main__': 
     app.run_server(debug=True)

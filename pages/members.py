@@ -72,6 +72,7 @@ def mem_pop(pathname):
             """
         values=[]
         cols=["Name","Birthday","Membership","App Batch","Year Standing","Degree Program","Other Orgs","Email","Present Address"]
+        
         df = db.querydatafromdatabase(sql, values, cols)
         print(df.shape[0])
         if df.shape[0]:

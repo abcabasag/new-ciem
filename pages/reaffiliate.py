@@ -7,6 +7,17 @@ from dash.exceptions import PreventUpdate
 from datetime import datetime
 import dash_bootstrap_components as dbc
 from app import app
+
+comms=[
+        "Academic Affairs Committee",
+        "External Affairs Committee",
+        "Finance Committee",
+        "Internal Affairs Committee",
+        "Membership and Recruitment Committee",
+        "Publications and Records Committee"
+]
+
+
 layout=html.Div([
     
         cm.navigation,

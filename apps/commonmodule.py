@@ -47,8 +47,9 @@ def page_name(pathname):
 navigation=dbc.Nav(
     [
        dbc.Container([
-           dbc.NavbarBrand([html.Img(src='/assets/logo.png',style={"width":"2.8dvw",'display':'inline'}),dbc.Label("UP Circle of Industrial Engineering Majors",style={'padding-left':'1em','font-size':'0.8em'})], style={"display":"block","width":"100%",'color':'white'}),
+           dbc.NavbarBrand([html.Img(src='/assets/logo.png',style={"width":"2.8dvw",'display':'inline'}),dbc.Label("UP Circle of Industrial Engineering Majors",style={'padding-left':'0.5em','font-size':'0.6em'})], style={"display":"block","width":"100%",'color':'white'}),
             dbc.NavItem(dbc.NavLink([di(icon='mdi-home',inline=True,),dbc.Label("Home",style={'padding-left':'1.3em'})], id='link-home',active=True, href="/home",class_name='linked'),class_name='nav-item-custom'),
+            dbc.NavItem(dbc.NavLink([di(icon='ic:round-link',inline=True,),dbc.Label("Reaffiliation",style={'padding-left':'1.3em'})], id='link-reaff',active=True, href="/reaffiliate",class_name='linked'),class_name='nav-item-custom'),
             dbc.NavItem(dbc.NavLink([di(icon='tdesign:member',inline=True,),dbc.Label("All Members",style={'padding-left':'1.3em'})],id='link-member', active=True, href="/members",class_name='linked'),class_name='nav-item-custom'),
             dbc.NavItem(dbc.NavLink([di(icon='octicon:person-24',inline=True,),dbc.Label("All Alumni",style={'padding-left':'1.3em'})], id='link-alum',active=True, href="/alumni",class_name='linked'),class_name='nav-item-custom'),
             dbc.NavItem(dbc.NavLink([di(icon='fluent:phone-update-24-regular',inline=True,),dbc.Label("Update Member Status",style={'padding-left':'1.3em'})], id='link-update-member',active=True, href="/update-member",class_name='linked'),class_name='nav-item-custom'),
@@ -69,6 +70,7 @@ navigation=dbc.Nav(
 @app.callback(
     [
         Output('link-home','class_name'),
+        Output('link-reaff','class_name'),
         Output('link-member','class_name'),
         Output('link-alum','class_name'),
         Output('link-update-member','class_name'),
