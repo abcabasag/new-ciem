@@ -318,15 +318,15 @@ reaffiliation_form = dbc.Form(
             [
                 "The Finance Committee has decided to set the reaffiliation fee to Php 120."
                 
-                "Payment of the reaffiliation fee upon submission of reaff form is highly encouraged (but not required) as you will only have to pay ₱100 and get a committee choice priority! You may still opt to pay on a later date within the semester and pay ₱120."
+                " Payment of the reaffiliation fee upon submission of reaff form is highly encouraged (but not required) as you will only have to pay ₱100 and get a committee choice priority! You may still opt to pay on a later date within the semester and pay ₱120."
 
-                "You can pay your reaffiliation fee through:"
-                "GCash/Paymaya: 0995 973 6273 (Jericho Joshua De Jesus)"
-                "PNB: 6334 1001 2523 (Jericho Joshua De Jesus)"
+                " You can pay your reaffiliation fee through:"
+                " GCash/Paymaya: 0995 973 6273 (Jericho Joshua De Jesus)"
+                " PNB: 6334 1001 2523 (Jericho Joshua De Jesus)"
 
-                "For other concerns, you may message Johann Daniel Alvarez or Jericho Joshua De Jesus through Facebook Messenger."
+                " For other concerns, you may message Johann Daniel Alvarez or Jericho Joshua De Jesus through Facebook Messenger."
             ],
-            className="mb-2",
+            className="mb-2"
         ),
         dbc.Row(
             [
