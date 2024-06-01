@@ -21,8 +21,9 @@ layout=html.Div([
                         [
                             dbc.Card([dbc.CardHeader("Members"),dbc.CardBody("Total here",id='total-mem-home'),dbc.CardFooter(dbc.NavLink("Check Members>",href="/members"))]),
                             dbc.Card([dbc.CardHeader("Alumni"),dbc.CardBody("Total here",id='total-alum-home'),dbc.CardFooter(dbc.NavLink("Check Alumni>",href="/alumni"))]),
-                            dbc.Card([dbc.CardHeader("Members"),dbc.CardBody("Total here",id='home-user'),dbc.CardFooter(dbc.NavLink("View Profile>"))]),
-                            
+                            dbc.Card([dbc.CardHeader("Reports"),dbc.CardBody("Total here",id='home-user'),dbc.CardFooter(dbc.NavLink("Check Full Reports>", href="/view-reports"))]),
+                            #Instead of user, reports na lang hehe and then hindi ko malagay yung text body nageerror
+                            #Text body should be the reports included like "Members (Active and Inactive), Headships, Committtee Preferences, 14 White Stripes"
                         ],class_name='flex homeshow'
                     )
                 ])
