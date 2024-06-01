@@ -31,7 +31,7 @@ layout=html.Div([
                 dbc.FormFloating(
                     [
                         dbc.Input(type="text", placeholder="Profession",id="prof-filter"),
-                        dbc.Label("Filter by Profession"),
+                        dbc.Label("Filter by Specialization"),
                     ]
                 )
             ],
