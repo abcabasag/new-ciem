@@ -212,31 +212,25 @@ add_alumni_form = dbc.Form(
         html.Div(id='alumoutput-message')  # For displaying output messages
     ]
 )
+
 layout = html.Div([
     cm.navigation,
     cm.top,
     html.Div([
+        html.Div([
         dbc.Card([
-            dbc.CardHeader("ADD ALUMNI FORM", class_name='flex'),
+            dbc.CardHeader("REAFFILIATION FORM", className='flex'),
             dbc.CardBody([
                 dbc.Container(
                     [
                         add_alumni_form,
-                        html.Br(),
-                    ], class_name='flex homeshow'
+                    ]
                 )
-            ]),
-            dbc.CardFooter(
-                [
-                    dbc.Button([di(icon='mingcute:facebook-line', inline=True), dbc.Label("Facebook Page")], href="https://www.facebook.com/upciem", external_link=True),
-                    dbc.Button([di(icon='bi:instagram', inline=True), dbc.Label("Instagram")], href="https://www.instagram.com/upciem/", external_link=True),
-                    dbc.Button([di(icon='iconoir:twitter', inline=True), dbc.Label("Twitter")], href="https://twitter.com/upciem", external_link=True),
-                    dbc.Button([di(icon='lucide:linkedin', inline=True), dbc.Label("LinkedIn")], href="https://ph.linkedin.com/company/upciem1976", external_link=True),
-                ], style={'display': 'flex', 'justify-content': 'space-evenly'}
-            )
+                  ]),
+                ])
+                ]) 
+    ], className='body')
         ])
-    ], className="body"),
-], className='flex body-container')
 
 @app.callback(
     Output('alumsubmit-button', 'style'),

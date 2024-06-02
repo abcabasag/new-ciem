@@ -85,7 +85,7 @@ def mem_pop(pathname, alum_name, filter_select, prof_filter):
         """
         values = []
         if alum_name:
-            sql += " AND (first_name || ' ' || middle_name || ' ' || last_name || ' ' || suffix) ILIKE %s"
+            sql += " AND CONCAT(first_name, ' ', middle_name, ' ', last_name, ' ', suffix) ILIKE %s"
             values.append(f"%{alum_name}%")
 
         if filter_select and prof_filter:
@@ -95,7 +95,7 @@ def mem_pop(pathname, alum_name, filter_select, prof_filter):
             else:
                 sql += f" AND {filter_select} ILIKE %s"
                 values.append(f"%{prof_filter}%")
-
+        print(sql,alum_name)
         cols = ["Name", "Birthday", "Membership", "App Batch", "Year Standing", "Degree Program", "Other Orgs", "Email", "Present Address"]
         df = db.querydatafromdatabase(sql, values, cols)
 

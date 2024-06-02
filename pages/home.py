@@ -133,5 +133,9 @@ def total(pathname):
         df=db.querydatafromdatabase(sql,[],cols)
         alumchildren+=[html.H1(df['count'][0])]
         alumchildren+=[html.P("Total Alumni in the Database")]
+        sql="SELECT COUNT(CASE WHEN active_status='Active'THEN 1 END), COUNT(CASE WHEN active_status='Inactive'THEN 1 END) FROM upciem_member"
+        cols=['act','inact']
+        df=db.querydatafromdatabase(sql,[],cols)
+        profchildren+=[html.H3(['Active: ',df['act'][0]]),html.H3(['Inactive: ',df['inact'][0]])]
         return memchildren,alumchildren,profchildren
     raise PreventUpdate

@@ -10,6 +10,14 @@ from apps import dbconnect as db
 from dash_iconify import DashIconify as di
 
 # Define the form layout
+comms=[
+        "Academic Affairs Committee",
+        "External Affairs Committee",
+        "Finance Committee",
+        "Internal Affairs Committee",
+        "Membership and Recruitment Committee",
+        "Publications and Records Committee"
+]
 reaffiliation_form = dbc.Form(
     [
         html.H5(html.B('Personal Information')),
@@ -312,6 +320,16 @@ reaffiliation_form = dbc.Form(
             className="mb-2",
         ),
         html.Br(),
+        html.H5(html.B('Committee Prefference')),
+        dbc.Row(
+            [
+                html.P('This is a multi-select dropdown. Select with first being most preferred and last being least preferred'),
+                dbc.Col(
+                    dcc.Dropdown(id='ranking-dropdown', options=[{'label': choice, 'value': choice} for choice in comms], multi=True,style={'width':'100%'})
+                )
+            ]
+        ),
+        html.Br(),
         html.H5(html.B('Reaffiliation Fee')),
 
         dbc.Row(
@@ -364,6 +382,7 @@ reaffiliation_form = dbc.Form(
                 )
             ]
         ),
+        dbc.Button('Submit', id='reaf-submit'),
         html.Div(id='output-message')  # For displaying output messages
     ]
 )
@@ -372,6 +391,7 @@ layout = html.Div([
     cm.navigation,
     cm.top,
     html.Div([
+        html.Div([
         dbc.Card([
             dbc.CardHeader("REAFFILIATION FORM", class_name='flex'),
             dbc.CardBody([
@@ -382,47 +402,34 @@ layout = html.Div([
                     ], class_name='flex homeshow'
                 )
             ]),
-            dbc.CardFooter(
-                [
-                    dbc.Button([di(icon='mingcute:facebook-line', inline=True), dbc.Label("Facebook Page")], href="https://www.facebook.com/upciem", external_link=True),
-                    dbc.Button([di(icon='bi:instagram', inline=True), dbc.Label("Instagram")], href="https://www.instagram.com/upciem/", external_link=True),
-                    dbc.Button([di(icon='iconoir:twitter', inline=True), dbc.Label("Twitter")], href="https://twitter.com/upciem", external_link=True),
-                    dbc.Button([di(icon='lucide:linkedin', inline=True), dbc.Label("LinkedIn")], href="https://ph.linkedin.com/company/upciem1976", external_link=True),
-                ], style={'display': 'flex', 'justify-content': 'space-evenly'}
-            )
-        ])
-    ], className="body"),
+    ]),],className='body') 
 ], className='flex body-container')
+        ])
+
 
 @app.callback(
-    Output('submit-button', 'style'),
     [
-        Input('first_name', 'value'),
-        Input('last_name', 'value'),
-        Input('valid_id', 'value'),
-        Input('birthdate', 'value'),
-        Input('contact_number', 'value'),
-        Input('emergency_contact_number', 'value'),
-        Input('email', 'value'),
-        Input('present_address', 'value'),
-        Input('permanent_address', 'value'),
-        Input('degree_program', 'value'),
-        Input('year_standing', 'value'),
-        Input('membership_type', 'value'),
-        Input('app_batch', 'value'),
-        Input('gwa', 'value'),
-        Input('reaff_fee', 'value')
-    ]
-)
-def toggle_submit_button(first_name, last_name, valid_id, birthdate, contact_number, emergency_contact_number, email, present_address, permanent_address, degree_program, year_standing, membership_type, app_batch, gwa, reaff_fee):
-    if all([first_name, last_name, valid_id, birthdate, contact_number, emergency_contact_number, email, present_address, permanent_address, degree_program, year_standing, membership_type, app_batch, gwa, reaff_fee]):
-        return {'display': 'block'}
-    else:
-        return {'display': 'none'}
-
-@app.callback(
-    Output('output-message', 'children'),
-    [Input('submit-button', 'n_clicks')],
+     Output('first_name', 'value'),
+     Output('middle_name', 'value'),
+     Output('last_name', 'value'),
+     Output('suffix', 'value'),
+     Output('valid_id', 'value'),
+     Output('birthdate', 'value'),
+     Output('contact_number', 'value'),
+     Output('emergency_contact_number', 'value'),
+     Output('email', 'value'),
+     Output('present_address', 'value'),
+     Output('permanent_address', 'value'),
+     Output('degree_program', 'value'),
+     Output('year_standing', 'value'),
+     Output('membership_type', 'value'),
+     Output('app_batch', 'value'),
+     Output('gwa', 'value'),
+     Output('reaff_fee', 'value'),
+     
+     Output('output-message', 'children')
+     ],
+    [Input('reaf-submit', 'n_clicks')],
     [State('first_name', 'value'),
      State('middle_name', 'value'),
      State('last_name', 'value'),
@@ -439,17 +446,17 @@ def toggle_submit_button(first_name, last_name, valid_id, birthdate, contact_num
      State('membership_type', 'value'),
      State('app_batch', 'value'),
      State('gwa', 'value'),
-     State('reaff_fee', 'value')]
+     State('reaff_fee', 'value'),
+     State('ranking-dropdown','value')]
 )
 def submit_form(n_clicks, first_name, middle_name, last_name, suffix, valid_id, birthdate, contact_number,
                 emergency_contact_number, email, present_address, permanent_address, degree_program,
-                year_standing, membership_type, app_batch, gwa, reaff_fee):
+                year_standing, membership_type, app_batch, gwa, reaff_fee,rank_dd):
     if n_clicks is None:
         raise PreventUpdate
-
     if not (first_name and last_name and valid_id and birthdate and contact_number and emergency_contact_number and email and present_address and permanent_address and degree_program and year_standing and membership_type and app_batch and gwa and reaff_fee):
-        return html.Div("Please fill in all required fields.", style={'color': 'red'})
-
+        return dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,html.Div("Please fill in all required fields.", style={'color': 'red'})
+    
     try:
         # Check if the person already exists
         sql = "SELECT valid_id FROM person WHERE valid_id=%s"
@@ -499,19 +506,25 @@ def submit_form(n_clicks, first_name, middle_name, last_name, suffix, valid_id, 
             """
             values = [valid_id, first_name, middle_name, last_name, suffix, birthdate, contact_number, emergency_contact_number, email, present_address, permanent_address]
             db.modifydatabase(sql, values)
-
+            print('aff')
             # Insert new affiliation
             sql = """
-            INSERT INTO affiliation(valid_id, degree_program, membership_type, year_standing, app_batch, gwa, reaff_fee)
-            VALUES (%s,%s,%s,%s,%s,%s,%s)
+            INSERT INTO affiliation(is_new,valid_id, degree_program, membership_type, year_standing, app_batch, gwa, reaff_fee,comm_firstchoice,comm_secondchoice,comm_thirdchoice, comm_fourthchoice,comm_fifthchoice, comm_sixthchoice)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
             """
-            values = [valid_id, degree_program, membership_type, year_standing, app_batch, gwa, reaff_fee]
+            values = [True,valid_id, degree_program, membership_type, year_standing, app_batch, gwa, reaff_fee,rank_dd[0] if len(rank_dd)>0 else '',rank_dd[1] if len(rank_dd)>1 else '',rank_dd[2] if len(rank_dd)>2 else '',rank_dd[3] if len(rank_dd)>3 else '',rank_dd[4] if len(rank_dd)>4 else '',rank_dd[5] if len(rank_dd)>5 else '']
             db.modifydatabase(sql, values)
-            
+            #insert as member
+            print('ednaff')
+            sql="""
+                INSERT INTO upciem_member(valid_id,active_status) VALUES(%s,'Active')
+            """
+            values=[valid_id]
+            db.modifydatabase(sql,values)
             message = "New member successfully added."
 
-        return html.Div(message, style={'color': 'green'})
+        return '','','','','','','','','','','','','','','','','',html.Div(message, style={'color': 'green'})
 
     except Exception as e:
-        return html.Div(f"An error occurred: {str(e)}", style={'color': 'red'})
+        return dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,dash.no_update,html.Div(f"An error occurred: {str(e)}", style={'color': 'red'})
 

@@ -84,25 +84,23 @@ navigation=dbc.Nav(
 )
 def selected_menu(pathname):
     if pathname == '/' or pathname == '/home':
-        return "linked-selected",'linked','linked','linked','linked','linked','linked','linked'
+        return "linked-selected",'linked','linked','linked','linked','linked','linked'
     elif pathname=="/change-password":
-        return "linked",'linked','linked','linked','linked','linked','linked','linked-selected'
+        return "linked",'linked','linked','linked','linked','linked','linked-selected'
     elif pathname=="/view-reports":
-        return "linked",'linked','linked','linked','linked','linked-selected','linked','linked'
-    elif pathname=="/managers":
-        return "linked-selected",'linked','linked','linked','linked','linked','linked','linked'
+        return "linked",'linked','linked','linked','linked-selected','linked','linked'
     elif pathname=="/members":
-        return "linked",'linked-selected','linked','linked','linked','linked','linked','linked'
+        return 'linked',"linked",'linked-selected','linked','linked','linked','linked'
     elif pathname=="/reaffiliate":
-        return "linked-selected",'linked','linked','linked','linked','linked','linked','linked'
+        return 'linked',"linked-selected",'linked','linked','linked','linked','linked'
     elif pathname=="/update-alumni":
-        return "linked",'linked','linked','linked','linked-selected','linked','linked','linked'
+        return 'linked','linked','linked','linked-selected','linked','linked','linked'
     elif pathname=="/update-member":
-        return "linked",'linked','linked','linked-selected','linked','linked','linked','linked'
+        return 'linked','linked','linked-selected','linked','linked','linked','linked'
     elif pathname=="/alumni":
-         return "linked",'linked','linked-selected','linked','linked','linked','linked','linked'
+         return 'linked',"linked",'linked','linked-selected','linked','linked','linked'
     elif pathname=='/update-member-modify':
-        return "linked",'linked','linked','linked-selected','linked','linked','linked','linked'
+        return "linked",'linked','linked','linked-selected','linked','linked','linked'
     elif pathname=="/profile":
-        return "linked",'linked','linked','linked','linked','linked','linked-selected','linked'
+        return 'linked','linked','linked','linked','linked','linked-selected','linked'
     raise PreventUpdate

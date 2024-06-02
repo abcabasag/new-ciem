@@ -274,7 +274,7 @@ def generate(pathname):
             SELECT person.valid_id,CONCAT(first_name, ' ',middle_name,' ' ,last_name, ' ', suffix) as full_name, comm_firstchoice,comm_secondchoice,comm_thirdchoice,comm_fourthchoice,comm_fifthchoice,comm_sixthchoice
             FROM 
             person LEFT JOIN upciem_member 
-            ON person.valid_id=upciem_member.valid_id JOIN affiliation 
+            ON person.valid_id=upciem_member.valid_id LEFT JOIN affiliation 
             ON person.valid_id=affiliation.valid_id 
             WHERE (upciem_member_delete is NULL or upciem_member_delete=False) AND 
 			active_status='Active'
