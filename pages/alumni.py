@@ -8,43 +8,39 @@ from datetime import datetime
 import dash_bootstrap_components as dbc
 from apps import dbconnect as db
 from app import app
-layout=html.Div([
-    
-        cm.navigation,
-        cm.top,
-    html.Div([
-        dbc.Container([dbc.Row(
-    [
-        dbc.Col(
-            [
-                dbc.FormFloating(
-                    [
-                        dbc.Input(type="text", placeholder="Enter Name",id="alum-name"),
-                        dbc.Label("Search Name"),
-                    ]
-                )
-            ],
-            width=6,
-        ),
-        dbc.Col(
-            [
-                dbc.FormFloating(
-                    [
-                        dbc.Input(type="text", placeholder="Profession",id="prof-filter"),
-                        dbc.Label("Filter by Specialization"),
-                    ]
-                )
-            ],
-            width=6,
-        ),
-    ],
-    className="g-7"
-,style={"width":"100%"}),
-],class_name='flex '),
 
-dbc.Container(["No Alumni to Display"],id="alum-table",class_name='table-wrapper')
-    ],className='body')
+layout = html.Div([
+    cm.navigation,
+    cm.top,
+    html.Div([
+        dbc.Container([
+            dbc.Row([
+                dbc.Col(
+                    dbc.Button("Add Alumni", id="add_alum_btn", color="primary", className="mb-3", href = '/add_alumni'),
+                    width={"size": 3}  # Adjust width as needed
+                )
+            ]),
+            dbc.Row([
+                dbc.Col(
+                    dbc.FormFloating([
+                        dbc.Input(type="text", placeholder="Enter Name", id="alum-name"),
+                        dbc.Label("Search Name"),
+                    ]),
+                    width=6,
+                ),
+                dbc.Col(
+                    dbc.FormFloating([
+                        dbc.Input(type="text", placeholder="Profession", id="prof-filter"),
+                        dbc.Label("Filter by Profession"),
+                    ]),
+                    width=6,
+                ),
+            ], className="g-7", style={"width": "100%"}),
+        ], className='flex '),
+        dbc.Container(["No Alumni to Display"], id="alum-table", className='table-wrapper')
+    ], className='body')
 ])
+
 @app.callback(
     Output("alum-table","children"),
     [Input("url","pathname"),Input("prof-filter","value"),Input("alum-name","value")]
