@@ -9,7 +9,7 @@ import dash_bootstrap_components as dbc
 # Importing your app definition from app.py so we can use it
 from app import app
 from apps import commonmodule as cm
-from pages import home,alumni,changepassword, generatereport,managers,members,reaffiliate,updatealum,updatemember,login,updatemem
+from pages import home,alumni,changepassword, generatereport,managers,members,reaffiliate,updatealum,updatemember,login,updatemem, add_alumni
 app.layout = html.Div([dcc.Location(id='url',refresh=False),
                        dcc.Store(id="auth",data={'isAuthenticated':True},storage_type="session"),
                        dcc.Store(id="updater",data=0,storage_type="session"),
@@ -64,6 +64,8 @@ def displaypage (pathname,data):
                         returnlayout=alumni.layout
                     elif pathname=='/update-member-modify':
                         returnlayout=updatemem.layout
+                    elif pathname=='/add_alumni':
+                        returnlayout=add_alumni.layout
                     else:
                         returnlayout = 'error404'
                     return returnlayout,pathname
@@ -78,5 +80,6 @@ def displaypage (pathname,data):
     else:
         raise PreventUpdate
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
+ 
     app.run_server(debug=True)
