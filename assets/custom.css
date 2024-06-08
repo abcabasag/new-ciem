@@ -203,3 +203,8 @@ background: linear-gradient(30deg, rgba(2,0,36,1) 0%, rgba(45,68,130,1) 10%, rgb
     align-items: center;
     justify-content: center;
   }
+  .icon{
+    height:1.5rem;
+    margin:auto;
+    padding:auto;  
+  }

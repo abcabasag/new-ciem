@@ -209,6 +209,7 @@ add_alumni_form = dbc.Form(
                 )
             ]
         ),
+        dbc.Button('Submit',id='alumsubmit-button'),
         html.Div(id='alumoutput-message')  # For displaying output messages
     ]
 )
@@ -231,27 +232,6 @@ layout = html.Div([
                 ]) 
     ], className='body')
         ])
-
-@app.callback(
-    Output('alumsubmit-button', 'style'),
-    [
-        Input('alumfirst_name', 'value'),
-        Input('alumlast_name', 'value'),
-        Input('alumvalid_id', 'value'),
-        Input('alumbirthdate', 'value'),
-        Input('alumcontact_number', 'value'),
-        Input('emergency_alumcontact_number', 'value'),
-        Input('alumemail', 'value'),
-        Input('alumpresent_address', 'value'),
-        Input('alumpermanent_address', 'value'),
-        Input('specialization', 'value')
-    ]
-)
-def toggle_submit_button(alumfirst_name, alumlast_name, alumvalid_id, alumbirthdate, alumcontact_number, emergency_alumcontact_number, alumemail, alumpresent_address, alumpermanent_address, specialization):
-    if all([alumfirst_name, alumlast_name, alumvalid_id, alumbirthdate, alumcontact_number, emergency_alumcontact_number, alumemail, alumpresent_address, alumpermanent_address, specialization]):
-        return {'display': 'block'}
-    else:
-        return {'display': 'none'}
 
 @app.callback(
     Output('alumoutput-message', 'children'),
@@ -300,20 +280,25 @@ def submit_form(n_clicks, alumfirst_name, alummiddle_name, alumlast_name, alumsu
                     email=%s,
                     present_address=%s,
                     permanent_address=%s
-                WHERE valid_id=%s
+
             """
+            if alummiddle_name is None:
+                alummiddle_name=''
+            if alumsuffix is None:
+                alumsuffix=''
             values = [alumfirst_name, alummiddle_name, alumlast_name, alumsuffix, alumbirthdate, alumcontact_number, emergency_alumcontact_number, alumemail, alumpresent_address, alumpermanent_address]
+            sql+=" WHERE valid_id='{alumvalid_id}';"
             db.modifydatabase(sql, values)
             
             # Update SPECIALIZATION information
             sql = """
                 UPDATE alumni 
                 SET 
-                    specialization=%s,
+                    specialization=%s
                     
                 WHERE valid_id=%s
             """
-            values = [specialization]
+            values = [specialization,alumvalid_id]
             db.modifydatabase(sql, values)
             
             message = "Existing member information updated successfully."
@@ -325,15 +310,10 @@ def submit_form(n_clicks, alumfirst_name, alummiddle_name, alumlast_name, alumsu
             """
             values = [alumvalid_id, alumfirst_name, alummiddle_name, alumlast_name, alumsuffix, alumbirthdate, alumcontact_number, emergency_alumcontact_number, alumemail, alumpresent_address, alumpermanent_address]
             db.modifydatabase(sql, values)
-
-            # Insert new affiliation
-            sql = """
-            INSERT INTO alumni (specialization, alumni_delete)
-            VALUES (%s, False)
-            """
-            values = [specialization]
+            sql="INSERT INTO alumni(valid_id,specialization) VALUES (%s,%s)"
+            values=[alumvalid_id,specialization]
             db.modifydatabase(sql, values)
-            
+            #Adding to upciem_member
             message = "New member successfully added."
 
         return html.Div(message, style={'color': 'green'})
