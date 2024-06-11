@@ -10,7 +10,6 @@ from dash.exceptions import PreventUpdate
 layout = html.Div(
     [
         dcc.Store(id='account_id_store', storage_type='session', data=0),  # Store user ID
-        html.Video(src="./assets/appsor.mp4", className="video", muted=True, width="100%", loop=True, autoPlay=True),
         dbc.Card(
             dbc.CardBody(
                 [
