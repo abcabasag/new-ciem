@@ -1,85 +1,53 @@
-import webbrowser
-from dash_iconify import DashIconify as di
 import dash
+import dash_bootstrap_components as dbc
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
-from dash.exceptions import PreventUpdate
-from datetime import datetime
-import dash_bootstrap_components as dbc
-# Importing your app definition from app.py so we can use it
 from app import app
-from apps import commonmodule as cm
-from pages import home,alumni,changepassword, generatereport,managers,members,reaffiliate,updatealum,updatemember,login,updatemem, add_alumni
-app.layout = html.Div([dcc.Location(id='url',refresh=False),
-                       dcc.Store(id="auth",data={'isAuthenticated':True},storage_type="session"),
-                       dcc.Store(id="updater",data=0,storage_type="session"),
-    html.Div(id='page-content')])
+from pages import home, login, changepassword, generatereport, managers, members, reaffiliate, updatealum, updatemember, alumni, updatemem, add_alumni
+
+
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    dcc.Store(id="auth", data={'isAuthenticated': False}, storage_type="session"),
+    dcc.Store(id="updater", data=0, storage_type="session"),
+    html.Div(id='page-content')
+])
 
 @app.callback(
-    [
-        
-        Output('page-content', 'children'),
-        Output('url','pathname')
-    ],
-    [
-        Input('url', 'pathname'),
-    ],
-    [
-        State('auth','data')
-    ]
+    Output('page-content', 'children'),
+    [Input('url', 'pathname'),
+     Input('auth', 'data')]
 )
-def displaypage (pathname,data):
-    print('current data in display->', data)
-    ctx = dash.callback_context
-    if ctx.triggered:
-        eventids = ctx.triggered
-        for eventidmore in eventids:
-            eventid=eventidmore['prop_id'].split('.')[0]
-            if eventid == 'url':
-                if data['isAuthenticated']:
-                    if pathname=='/logout':
-                        return [login.layout],'/login'
-                    if pathname == '/' or pathname == '/home':
-                        print("home")
-                        pathname='/home'
-                        returnlayout = home.layout
-                    elif pathname=="/change-password":
-                        returnlayout=changepassword.layout
-                    # elif pathname=="/edit-profile":
-                    #     returnlayout=reaffiliate.layout
-                    elif pathname=="/view-reports":
-                        returnlayout=generatereport.layout
-                    elif pathname=="/managers":
-                        pathname="/managers"
-                        returnlayout=managers.layout
-                    elif pathname=="/members":
-                        returnlayout=members.layout
-                    elif pathname=="/reaffiliate":
-                        returnlayout=reaffiliate.layout
-                    elif pathname=="/update-alumni":
-                        returnlayout=updatealum.layout
-                    elif pathname=="/update-member":
-                        returnlayout=updatemember.layout
-                    elif pathname=="/alumni":
-                        returnlayout=alumni.layout
-                    elif pathname=='/update-member-modify':
-                        returnlayout=updatemem.layout
-                    elif pathname=='/add_alumni':
-                        returnlayout=add_alumni.layout
-                    else:
-                        returnlayout = 'error404'
-                    return returnlayout,pathname
-                else:
-                    return [login.layout],'/login'
-            elif data['isAuthenticated'] and pathname=='/login':
-                    return dash.no_update,'/home'
-            elif not data['isAuthenticated']:
-                    return [login.layout],'/login'
-            else:
-                PreventUpdate
+def display_page(pathname, auth_data):
+    if auth_data and auth_data.get('isAuthenticated'):
+        if pathname in ('/', '/home'):
+            return home.layout
+        elif pathname == '/logout':
+            return login.layout
+        elif pathname == "/view-reports":
+            return generatereport.layout, "/view-reports"
+        elif pathname == "/managers":
+            return managers.layout, "/managers"
+        elif pathname == "/members":
+            return members.layout, "/members"
+        elif pathname == "/reaffiliate":
+            return reaffiliate.layout, "/reaffiliate"
+        elif pathname == "/update-alumni":
+            return updatealum.layout, "/update-alumni"
+        elif pathname == "/update-member":
+            return updatemember.layout, "/update-member"
+        elif pathname == "/alumni":
+            return alumni.layout, "/alumni"
+        elif pathname == '/update-member-modify':
+            return updatemem.layout, '/update-member-modify'
+        elif pathname == '/add_alumni':
+            return add_alumni.layout, '/add_alumni'
+        elif pathname == '/add_alumni':
+            return add_alumni.layout, '/add_alumni'
+        else:
+            return 'error404', '/error404'
     else:
-        raise PreventUpdate
+        return login.layout
 
 if __name__ == '__main__':
- 
     app.run_server(debug=True)
