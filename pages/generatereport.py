@@ -220,9 +220,9 @@ def generate(pathname):
         #since we removed the committee ID from active we are to refilter another one with only full name and committee id connected to them
         hs_active_mem=df[df['active']=='Active'][['Full Name','committee_id','gwa']]
         #add committee names for each id
-        hs_active_mem['Committee Name']=[committee_names[int(cid)-1] if not math.isnan(cid) else "No Committee" for cid in hs_active_mem['committee_id']]
+        hs_active_mem['Committee Name']=[committee_names[int(cid)-1] if cid is not None and cid.isnumeric()  else "No Committee" for cid in hs_active_mem['committee_id']]
         # We now add the grading for each committee id
-        hs_active_mem['Performance Grade']=[headship_average[int(cid)] if not math.isnan(cid) else 1 for cid in hs_active_mem['committee_id']] #assumme 1 muna yung lowest for performance checking lang
+        hs_active_mem['Performance Grade']=[headship_average[int(cid)] if cid is not None and cid.isnumeric()  else 1 for cid in hs_active_mem['committee_id']] #assumme 1 muna yung lowest for performance checking lang
         #we create a new row
         #we now drop the committee id
         hs_active_mem=hs_active_mem.drop(columns=['committee_id'])
