@@ -9,6 +9,7 @@ from apps import commonmodule as cm
 from apps import dbconnect as db
 from dash_iconify import DashIconify as di
 
+
 # Define the form layout
 
 add_alumni_form = dbc.Form(
@@ -185,34 +186,58 @@ add_alumni_form = dbc.Form(
             ],
             className="mb-2",
         ),
+
+        html.Br(),
+        html.H5(html.B('Specialization')),
         dbc.Row(
             [
-                dbc.Label(
-                    [
-                        "Specialization",
-                        html.Span("*", style={"color": "#F8B237"})
-                    ],
-                    width=3
-                ),
+                html.P('You may choose from the dropdown menu or manually input your specialization if not in the options. You may also select more than one.'),
                 dbc.Col(
-                    dbc.Input(type="text", id='specialization', disabled=False),
-                    width=4,
+                    dbc.InputGroup(
+                        [
+                            dcc.Dropdown(
+                                id='specialization-dropdown',
+                                options=[
+                                    {'label': 'Operations Research', 'value': 'Operations Research'},
+                                    {'label': 'Supply Chain Management', 'value': 'Supply Chain Management'},
+                                    {'label': 'Ergonomics', 'value': 'Ergonomics'},
+                                    {'label': 'Information Technology', 'value': 'Information Technology'},
+                                    {'label': 'Quality Control', 'value': 'Quality Control'},
+                                    {'label': 'Finance', 'value': 'Finance'},
+                                    {'label': 'Industrial Design', 'value': 'Industrial Design'},
+                                    {'label': 'Academe', 'value': 'Academe'},
+                                    {'label': 'Others', 'value': 'Others'}
+                                ],
+                                multi=True,
+                                placeholder="Select specialization",
+                                style={'width': '80%'}
+                            ),
+                            dbc.Input(id='other-specialization', type='text', placeholder='Other specialization', style={'display': 'none'})
+                        ]
+                    ),
                 ),
             ],
             className="mb-2",
         ),
+
+        html.Br(),
+        html.Br(),
         dbc.Row(
             [
                 dbc.Col(
                     dbc.Button("Submit", id="alumsubmit-button", color="primary", className="mb-3", style={'display': 'none'}),
                     width={"size": 6, "offset": 3}
                 )
-            ]
+            ],
         ),
         dbc.Button('Submit',id='alumsubmit-button'),
         html.Div(id='alumoutput-message')  # For displaying output messages
     ]
 )
+
+
+
+
 
 layout = html.Div([
     cm.navigation,
@@ -314,7 +339,7 @@ def submit_form(n_clicks, alumfirst_name, alummiddle_name, alumlast_name, alumsu
             values=[alumvalid_id,specialization]
             db.modifydatabase(sql, values)
             #Adding to upciem_member
-            message = "New member successfully added."
+            message = "New alumni successfully added."
 
         return html.Div(message, style={'color': 'green'})
 
