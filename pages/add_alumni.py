@@ -205,8 +205,7 @@ add_alumni_form = dbc.Form(
                                     {'label': 'Quality Control', 'value': 'Quality Control'},
                                     {'label': 'Finance', 'value': 'Finance'},
                                     {'label': 'Industrial Design', 'value': 'Industrial Design'},
-                                    {'label': 'Academe', 'value': 'Academe'},
-                                    {'label': 'Others', 'value': 'Others'}
+                                    {'label': 'Academe', 'value': 'Academe'}
                                 ],
                                 multi=True,
                                 placeholder="Select specialization",
@@ -215,6 +214,23 @@ add_alumni_form = dbc.Form(
                             dbc.Input(id='other-specialization', type='text', placeholder='Other specialization', style={'display': 'none'})
                         ]
                     ),
+                ),
+            ],
+            className="mb-2",
+        ),
+        html.Br(),
+        dbc.Row(
+            [
+                dbc.Label(
+                    [
+                        "Remarks ",
+                        html.Span("*", style={"color": "#F8B237"})
+                    ],
+                    width=3
+                ),
+                dbc.Col(
+                    dbc.Input(type="text", id='remarks', disabled=False),
+                    width=4,
                 ),
             ],
             className="mb-2",
@@ -231,7 +247,9 @@ add_alumni_form = dbc.Form(
             ],
         ),
         dbc.Button('Submit',id='alumsubmit-button'),
-        html.Div(id='alumoutput-message')  # For displaying output messages
+        html.Div(id='alumoutput-message'),  # For displaying output messages
+        html.Br(),
+        html.Br(),
     ]
 )
 
@@ -272,11 +290,12 @@ layout = html.Div([
      State('alumemail', 'value'),
      State('alumpresent_address', 'value'),
      State('alumpermanent_address', 'value'),
-     State ('specialization', 'value')
+     State('specialization', 'value'),
+     State('remarks', 'value')
      ]
 )
 def submit_form(n_clicks, alumfirst_name, alummiddle_name, alumlast_name, alumsuffix, alumvalid_id, alumbirthdate, alumcontact_number,
-                emergency_alumcontact_number, alumemail, alumpresent_address, alumpermanent_address, specialization):
+                emergency_alumcontact_number, alumemail, alumpresent_address, alumpermanent_address, specialization, remarks):
     if n_clicks is None:
         raise PreventUpdate
 
